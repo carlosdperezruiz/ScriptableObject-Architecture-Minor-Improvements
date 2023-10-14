@@ -19,7 +19,15 @@ namespace ScriptableObjectArchitecture.Editor
         protected readonly SerializedProperty iterator;
         protected readonly SerializedProperty endProperty;
 
+        /*
+         * Improvement:
+         *
+         * This field causes the warning "The field is assigned but its value is never used" so disabling that warning.
+         * In the future, it's possible to remove this field, but need to verify that it's actually not used
+         */
+#pragma warning disable CS0414
         private bool consumeChildren;
+#pragma warning restore CS0414
         private int parentDepth;
 
         public virtual bool Next()
@@ -43,7 +51,7 @@ namespace ScriptableObjectArchitecture.Editor
                 if (iterator.propertyType == SerializedPropertyType.Generic)
                     nextVisible = iterator.NextVisible(true);
             }
-            
+
             return nextVisible && CanDraw();
         }
         public virtual void End()

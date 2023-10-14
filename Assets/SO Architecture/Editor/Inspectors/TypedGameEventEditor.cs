@@ -22,6 +22,17 @@ namespace ScriptableObjectArchitecture.Editor
 
             using (var scope = new EditorGUI.ChangeCheckScope())
             {
+                /*
+                 * Improvement:
+                 *
+                 * If the type is a generic (IEnumerator) or doesn't have a default value (struct) this function will
+                 * cause an error. In these cases, this change is intended to remove the "Raise" button in the editor.
+                 */
+                if (property == null || property.serializedObject == null || property.serializedObject.targetObject == null)
+                {
+                    return;
+                }
+
                 Type debugValueType = GetDebugValueType(property);
                 GenericPropertyDrawer.DrawPropertyDrawerLayout(property, debugValueType);
 
